@@ -6,25 +6,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "agendamento")
-public class Agendamento {
+@Table(name = "cliente")
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String servico;
-    private LocalDateTime dataHoraAgendamento;
-    private LocalDateTime dataInsercao =LocalDateTime.now();
+    private String nome;
+    private String telefone;
 
-    @ManyToOne
-    private Cliente cliente;
-
-    @ManyToOne
-    private Profissional profissional;
+    @OneToMany (mappedBy = "cliente")
+    private List<Agendamento> agendamentos;
 }
+
+
