@@ -7,7 +7,6 @@ import com.alissonrmg.agendador_horarios.infrastructure.repository.ProfissionalR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,8 +31,8 @@ public class AgendamentoService {
             throw new RuntimeException ("Horario indisponível");
         }
     }
-    public void delete(LocalDateTime dataHoraAgendamento, Long cliente){
-        agendamentoRepository.deleteByDataHoraAgendamentoAndClienteId(dataHoraAgendamento,cliente);
+    public void delete(LocalDateTime dataHoraAgendamento, Long clienteId){
+        agendamentoRepository.deleteByDataHoraAgendamentoAndClienteId(dataHoraAgendamento,clienteId);
 
     }
     public List<Agendamento> buscarAgendamentos (LocalDate data){
