@@ -2,6 +2,8 @@ package com.alissonrmg.agendador_horarios.services;
 
 import com.alissonrmg.agendador_horarios.infrastructure.entity.Agendamento;
 import com.alissonrmg.agendador_horarios.infrastructure.repository.AgendamentoRepository;
+import com.alissonrmg.agendador_horarios.infrastructure.repository.ClienteRepository;
+import com.alissonrmg.agendador_horarios.infrastructure.repository.ProfissionalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +18,22 @@ import java.util.Objects;
 public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
+    private final ClienteRepository clienteRepository;
+    private final ProfissionalRepository profissionalRepository;
 
     public Agendamento save(Agendamento agendamento){
         LocalDateTime horaagendamento = agendamento.getDataHoraAgendamento();
         LocalDateTime horaFim = agendamento.getDataHoraAgendamento().plusHours(1);
 
-        Agendamento agendados = agendamentoRepository.findByServicoAndDataHoraAgendamentoBetween(agendamento.getServico(), horaagendamento,horaFim);
+        Agendamento agendados = agendamentoRepository.findByProfissionalIdAndDataHoraAgendamentoBetween(agendamento.getProfissional().getId(), horaagendamento,horaFim);
         if(Objects.isNull(agendados)){
            return agendamentoRepository.save(agendamento);
         }else {
-            throw new RuntimeException ("Horario indiponivel");
+            throw new RuntimeException ("Horario indisponível");
         }
     }
-    public void delete(LocalDateTime dataHoraAgendamento, String cliente){
-        agendamentoRepository.deleteByDataHoraAgendamentoAndCliente(dataHoraAgendamento,cliente);
+    public void delete(LocalDateTime dataHoraAgendamento, Long cliente){
+        agendamentoRepository.deleteByDataHoraAgendamentoAndClienteId(dataHoraAgendamento,cliente);
 
     }
     public List<Agendamento> buscarAgendamentos (LocalDate data){
@@ -37,8 +41,8 @@ public class AgendamentoService {
         LocalDateTime horaFinal = data.atTime(23,59,59);
         return agendamentoRepository.findByDataHoraAgendamentoBetween(primeiraHoraDoDia ,horaFinal);
     }
-    public Agendamento alterarAgendamento (Agendamento agendamento, LocalDateTime dataHoraAgendamento ,String cliente){
-        Agendamento agenda= agendamentoRepository.findByDataHoraAgendamentoAndCliente(dataHoraAgendamento , cliente);
+    public Agendamento alterarAgendamento (Agendamento agendamento, LocalDateTime dataHoraAgendamento ,Long cliente){
+        Agendamento agenda= agendamentoRepository.findByDataHoraAgendamentoAndClienteId(dataHoraAgendamento , cliente);
         if (Objects.isNull(agenda)){
             throw new RuntimeException ("Esse horario não esta preenchido");
         }
