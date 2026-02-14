@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/agendamento")
 public class AgendamentoController {
     private final AgendamentoService agendamentoService;
 
-    @PostMapping("/post")
-    public ResponseEntity<Agendamento> save (@RequestBody Agendamento agendameto){
+    @PostMapping
+    public ResponseEntity <Agendamento> save (@RequestBody Agendamento agendameto){
         try {
             return ResponseEntity.ok(agendamentoService.save(agendameto));
         } catch (Exception e) {
@@ -25,16 +26,16 @@ public class AgendamentoController {
         }
 
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete (@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraAgendamento, @RequestParam String cliente){
+    @DeleteMapping("/{clienteId}")
+    public ResponseEntity<Void> delete (@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraAgendamento, @PathVariable Long clienteId){
         try {
-            agendamentoService.delete(dataHoraAgendamento, cliente);
+            agendamentoService.delete(dataHoraAgendamento, clienteId);
             return ResponseEntity.noContent().build(); // 204
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build(); // 400
         }
     }
-    @GetMapping("/get")
+    @GetMapping
     public ResponseEntity <List<Agendamento>> buscarAgendamentos(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(agendamentoService.buscarAgendamentos(date));
@@ -42,10 +43,10 @@ public class AgendamentoController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping("/put")
-    public ResponseEntity<Agendamento> alterarAgendamento (@RequestBody Agendamento agendamento,@RequestParam LocalDateTime dataHoraAgendamento, @RequestParam String cliente ){
+    @PutMapping("/{clienteId}")
+    public ResponseEntity<Agendamento> alterarAgendamento (@RequestBody Agendamento agendamento,@RequestParam LocalDateTime dataHoraAgendamento, @PathVariable Long clienteId ){
         try {
-            return ResponseEntity.ok(agendamentoService.alterarAgendamento(agendamento, dataHoraAgendamento ,cliente));
+            return ResponseEntity.ok(agendamentoService.alterarAgendamento(agendamento, dataHoraAgendamento ,clienteId));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
