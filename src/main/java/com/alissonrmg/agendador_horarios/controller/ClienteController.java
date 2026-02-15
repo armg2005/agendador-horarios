@@ -38,6 +38,14 @@ public class ClienteController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity <Cliente> buscarClientesById (@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(clienteService.buscarClientesById(id));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
     @PutMapping("/{clienteId}")
     public ResponseEntity<Cliente> alterarCliente (@PathVariable Long clienteId , @RequestBody Cliente cliente){
         try {
