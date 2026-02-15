@@ -21,6 +21,13 @@ public class ProfissionalService {
     public List<Profissional> buscarProfissional(){
         return profissionalRepository.findAll();
     }
+    public Profissional buscarProfissionalById(Long id){
+        Profissional profissional = profissionalRepository.findById(id).orElse(null);
+        if (Objects.isNull(profissional)){
+            throw new RuntimeException("Profissional não encontrado ");
+        }
+        return profissional;
+    }
     public Profissional alterarProfissional(Profissional profissional , Long id){
         Profissional profissional1 = profissionalRepository.findById(id).orElse(null);
         if (Objects.nonNull(profissional1)){

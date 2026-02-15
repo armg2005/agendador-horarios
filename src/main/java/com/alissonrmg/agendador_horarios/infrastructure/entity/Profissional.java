@@ -1,5 +1,6 @@
 package com.alissonrmg.agendador_horarios.infrastructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +18,10 @@ import java.util.List;
 public class Profissional {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nome;
 
+    @JsonIgnore
     @OneToMany (mappedBy = "profissional")
     private List<Agendamento> agendamentos;
 }

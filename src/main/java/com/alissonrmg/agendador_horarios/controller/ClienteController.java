@@ -17,6 +17,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(clienteService.save(cliente));
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -33,6 +34,14 @@ public class ClienteController {
     public ResponseEntity <List<Cliente>> buscarClientes (){
         try {
             return ResponseEntity.ok(clienteService.buscarClientes());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity <Cliente> buscarClientesById (@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(clienteService.buscarClientesById(id));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

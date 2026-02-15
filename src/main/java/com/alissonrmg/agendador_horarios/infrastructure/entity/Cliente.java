@@ -1,5 +1,6 @@
 package com.alissonrmg.agendador_horarios.infrastructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +18,11 @@ import java.util.List;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nome;
     private String telefone;
 
+    @JsonIgnore
     @OneToMany (mappedBy = "cliente")
     private List<Agendamento> agendamentos;
 }

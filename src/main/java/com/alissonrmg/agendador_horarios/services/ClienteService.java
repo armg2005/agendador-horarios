@@ -21,6 +21,13 @@ public class ClienteService {
     public List<Cliente> buscarClientes(){
        return clienteRepository.findAll();
     }
+    public Cliente buscarClientesById(Long id){
+        Cliente cliente= clienteRepository.findById(id).orElse(null);
+        if (Objects.isNull(cliente)){
+            throw new RuntimeException("Cliente não encontrado ");
+        }
+        return cliente;
+    }
     public Cliente alterarCliente(Cliente cliente , Long id){
         Cliente cliente1 = clienteRepository.findById(id).orElse(null);
         if (Objects.nonNull(cliente1)){
