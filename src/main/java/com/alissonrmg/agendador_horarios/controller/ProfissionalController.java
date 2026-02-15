@@ -19,6 +19,7 @@ public class ProfissionalController {
         try {
             return ResponseEntity.ok(profissionalService.save(profissional));
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

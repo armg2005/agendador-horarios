@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String servico;
     private LocalDateTime dataHoraAgendamento;
     private LocalDateTime dataInsercao =LocalDateTime.now();

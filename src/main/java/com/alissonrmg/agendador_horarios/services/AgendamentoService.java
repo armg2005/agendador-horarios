@@ -1,6 +1,8 @@
 package com.alissonrmg.agendador_horarios.services;
 
 import com.alissonrmg.agendador_horarios.infrastructure.entity.Agendamento;
+import com.alissonrmg.agendador_horarios.infrastructure.entity.Cliente;
+import com.alissonrmg.agendador_horarios.infrastructure.entity.Profissional;
 import com.alissonrmg.agendador_horarios.infrastructure.repository.AgendamentoRepository;
 import com.alissonrmg.agendador_horarios.infrastructure.repository.ClienteRepository;
 import com.alissonrmg.agendador_horarios.infrastructure.repository.ProfissionalRepository;
@@ -21,6 +23,19 @@ public class AgendamentoService {
     private final ProfissionalRepository profissionalRepository;
 
     public Agendamento save(Agendamento agendamento){
+        Cliente cliente = clienteRepository.findById(agendamento.getCliente().getId()).orElse(null);
+        if (Objects.isNull(cliente)){
+            throw new RuntimeException("Cliente não encontrado");
+        }
+        Profissional profissional= profissionalRepository.findById(agendamento.getProfissional().getId()).orElse(null);
+        if (Objects.isNull(profissional)){
+            throw new RuntimeException("Cliente não encontrado");
+        }
+        agendamento.setCliente(cliente);
+        agendamento.setProfissional(profissional);
+
+        agendamento.setDataInsercao(LocalDateTime.now());
+
         LocalDateTime horaagendamento = agendamento.getDataHoraAgendamento();
         LocalDateTime horaFim = agendamento.getDataHoraAgendamento().plusHours(1);
 

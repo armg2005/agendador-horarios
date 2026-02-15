@@ -17,6 +17,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(clienteService.save(cliente));
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
