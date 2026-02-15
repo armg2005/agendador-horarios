@@ -1,5 +1,6 @@
 package com.alissonrmg.agendador_horarios.controller;
 
+import com.alissonrmg.agendador_horarios.infrastructure.entity.Cliente;
 import com.alissonrmg.agendador_horarios.infrastructure.entity.Profissional;
 import com.alissonrmg.agendador_horarios.services.ProfissionalService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,14 @@ public class ProfissionalController {
     public ResponseEntity <List<Profissional>> buscarProfisional (){
         try {
             return ResponseEntity.ok(profissionalService.buscarProfissional());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity <Profissional> buscarClientesById (@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(profissionalService.buscarProfissionalById(id));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
