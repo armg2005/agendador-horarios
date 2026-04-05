@@ -30,9 +30,9 @@ public class AgendamentoController {
     public ResponseEntity<Void> delete (@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraAgendamento, @PathVariable Long clienteId){
         try {
             agendamentoService.delete(dataHoraAgendamento, clienteId);
-            return ResponseEntity.noContent().build(); // 204
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build(); // 400
+            return ResponseEntity.badRequest().build();
         }
     }
     @GetMapping
